@@ -17,14 +17,12 @@ db = []
 counter = 0
 
 
-def cadastrarPeca(counter=counter, db=db):
-    # Aumenta o Contador em 1
-    counter += 1
+def cadastrarPeca(counter):
     # mostra algumas informações
     print("Você Selecionou a Opção Cadastar Peça")
-    print(f"Codigo da Peça: {counter:0>3}")
+    print(f"Codigo da Peça: {counter:0>4}")
     # Gera o id Unico
-    id = f"{counter:0>3}"
+    id = f"{counter:0>4}"
     # pega os inputs
     nome = str(input("Por favor entre com o NOME Da Peça: "))
     fabricante = str(input("Por favor entre com o FABRICANTE Da Peça: "))
@@ -38,15 +36,46 @@ def cadastrarPeca(counter=counter, db=db):
     })
 
 
-def consultarPeca(counter=counter, db=db):
+def consultarPeca():
+    print("Você Selecionou a Opção Consultar Peça")
+    while True:
+        print("Escolha a opção desejada:\n1 - Consultar Todas as Peças\n2 - Consultar Peças por Código\n3 - Consultar Peças por Fabricante\n4 - Retornar")
+        op = str(input(">> "))
+        if op == "1":
+            for produto in db:
+                print("-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+                for key, value in produto.items():
+                    print(f"{key}:{value}")
+            print("-=-=-=-=-=-=-=-=-=-=-=-=-=-")
 
-    pass
+        elif op == "2":
+            id = str(input("Digite o Codigo do Produto: "))
+            for produto in db:
+                if produto["id"] == id:
+                    print("-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+                    for key, value in produto.items():
+                        print(f"{key}:{value}")
+                    print("-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+        elif op == "3":
+            
+            fabricante = str(input("Digite o Fabricante do Produto: "))
+            for produto in db:
+                if produto["fabricante"] == fabricante:
+                    print("-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+                    for key, value in produto.items():
+                        print(f"{key}:{value}")
+                    print("-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+        elif op == "4":
+            break
+        else:
+            print("Opção Invalida")
+            continue
 
 
-def removerPeca(counter=counter, db=db):
+
+def removerPeca():
     # pega o id por inputo do usuario
     id = str(input("Digite o codigo da peça a ser removida: "))
-    print(db)
     for i in db:
         # verifica se o id é o mesmo do objeto
         if id == i["id"]:
@@ -55,18 +84,18 @@ def removerPeca(counter=counter, db=db):
             # remove o id
             del db[uid]
             # para o loop
-
-            print(db)
+            print("Peça Removida com Sucesso! Voltando ao Menu")
             break
         else:
             continue
 
 
 while True:
-    print("Escolha a opção desejada:\n1-Cadastrar Peças\n2-Consultar Peças\n3-Remover Peças\n4-Sair")
+    print("Escolha a opção desejada:\n1 - Cadastrar Peças\n2 - Consultar Peças\n3 - Remover Peças\n4 - Sair")
     op = str(input(">> "))
     if op == "1":
-        cadastrarPeca()
+        counter += 1
+        cadastrarPeca(counter)
     elif op == "2":
         consultarPeca()
     elif op == "3":
